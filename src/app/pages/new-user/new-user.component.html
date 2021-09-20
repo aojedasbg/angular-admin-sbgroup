@@ -1,0 +1,250 @@
+<form [formGroup]="newUserForm" (ngSubmit)="save()">
+    <ng-container>
+      <div class="row mb-5">
+        <div class="col-lg-6 col-xl-6">
+          
+          <h3 class="boldfont-weight-bolder text-dark"><i class="arrow left float-left" (click)="navigateToUsers()" title="Volver"></i>Crear Usuario</h3>
+        </div>
+        <div class="col-lg-6 col-xl-6">
+          <button class="btn btn-success btn-lg float-right" style="background-color: #6AA12A; border-color: #6AA12A;"[disabled]="newUserForm.status === 'INVALID'" >Guardar</button>
+        </div>
+        
+      </div>
+      
+      <div class="card card-custom " >      
+        <div class="card-header py-3">
+          <div class="card-title align-items-start flex-column">
+            <h3 class="card-label font-weight-bolder text-dark">Informacion de la cuenta</h3>
+          </div>
+        </div>
+        <!--end::Header-->
+        <!--begin::Form-->
+        <div class="form">
+          <!--begin::Body-->
+          <div class="card-body">
+            
+            <div class="form-group row">
+              <label class="col-xl-2 col-lg-2 col-form-label font-weight-bold">Nombre completo:</label>
+              <div class="col-lg-5 col-xl-4">
+                <input class="form-control form-control-lg form-control-solid"
+                  type="text"
+                  formControlName="name"
+                  
+                />
+                <ng-container
+                  [ngTemplateOutlet]="formError"
+                  [ngTemplateOutletContext]="{
+                    validation: 'required',
+                    message: 'Nombre es requerido.',
+                    control: newUserForm.controls['name']
+                  }"
+                ></ng-container>
+                <ng-container
+                  [ngTemplateOutlet]="formError"
+                  [ngTemplateOutletContext]="{
+                    validation: 'minLength',
+                    message: 'Nombre debe tener al menos 3 caracteres.',
+                    control: newUserForm.controls['name']
+                  }"
+                ></ng-container>
+                <ng-container
+                  [ngTemplateOutlet]="formError"
+                  [ngTemplateOutletContext]="{
+                    validation: 'maxLength',
+                    message: 'Nombre debe tener como maximo 50 caracteres',
+                    control: newUserForm.controls['name']
+                  }"
+                ></ng-container>
+              </div>
+              <label class="col-xl-1 col-lg-1 col-form-label font-weight-bold">Puesto:</label>
+              <div class="col-lg-5 col-xl-4">
+                <input class="form-control form-control-lg form-control-solid"
+                  type="text"
+                  formControlName="position"
+                  
+                />
+                <ng-container
+                [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{
+                  validation: 'required',
+                  message: 'Puesto es requerido.',
+                  control: newUserForm.controls['position']
+                }"
+              ></ng-container>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-xl-2 col-lg-2 col-form-label font-weight-bold">Teléfono:</label>
+              <div class="col-lg-5 col-xl-4">
+                <input class="form-control form-control-lg form-control-solid"
+                  type="text"
+                  formControlName="phone"
+                  
+                />
+                <ng-container
+                [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{
+                  validation: 'required',
+                  message: 'Teléfono es requerido.',
+                  control: newUserForm.controls['phone']
+                }"
+              ></ng-container>
+              </div>
+              <label class="col-xl-1 col-lg-1 col-form-label font-weight-bold">Correo:</label>
+              <div class="col-lg-5 col-xl-4">
+                <input class="form-control form-control-lg form-control-solid"
+                  type="text"
+                  formControlName="email"
+                  
+                />
+                <ng-container
+                [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{
+                  validation: 'required',
+                  message: 'Email es requerido.',
+                  control: newUserForm.controls['email']
+                }"
+              ></ng-container>
+              <ng-container
+              [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{
+                validation: 'email',
+                message: 'Email debe ser válido',
+                control: newUserForm.controls['email']
+              }"
+            ></ng-container>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-xl-2 col-lg-2 col-form-label font-weight-bold">Segmento:</label>
+              <div class="col-lg-5 col-xl-4">
+                <select class="form-control form-control-lg" formControlName="segment" (change)="segmentSelect()" >
+                  <option [ngValue]="null" disabled>Selecciona el segmento</option>
+                  <option *ngFor="let segment of segmentList" [ngValue]="segment">
+                    {{segment.name}}
+                  </option>
+                </select>
+                <ng-container
+                [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{
+                  validation: 'required',
+                  message: 'Segmento es requerido.',
+                  control: newUserForm.controls['segment']
+                }"
+              ></ng-container>
+              </div>
+              <label class="col-xl-1 col-lg-1 col-form-label font-weight-bold">URL:</label>
+              <label class="col-lg-2 col-xl-2 col-form-label" style="padding-right:0px !important; padding-left:0px !important;">sbgroup.com.mx/{{segmentUrlName}}/</label>
+              <div class="col-lg-2 col-xl-2" style="padding-right:0px !important; padding-left:0px !important;">
+                <input class="form-control form-control-lg form-control-solid"
+                  type="text"
+                  formControlName="url"
+                  
+                />
+                <ng-container
+                [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{
+                  validation: 'required',
+                  message: 'Url es requerido.',
+                  control: newUserForm.controls['url']
+                }"
+              ></ng-container>
+              </div>
+              <label class="col-lg-1 col-xl-1 col-form-label" style="padding-right:0px !important; padding-left:0px !important;">.html</label>
+            </div>
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold">Imagen asesor:</label>
+              <div class="col-lg-9 col-xl-6">
+                <div class="image-input image-input-outline"
+                  id="kt_profile_avatar"
+                >
+                  <div >
+                    <ng-container *ngIf="isImageSaved; else elseTemplate">
+                        <img style="max-width:200px; height:auto;" [src]="cardImageBase64" />
+                    </ng-container>
+                    <ng-template #elseTemplate>
+                        <img src="./assets/media/users/default.jpg" style="max-width:200px; height:auto;" class="img-responsive">
+                    </ng-template>
+                  </div>
+                  
+                  <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                    data-action="change"
+                    data-toggle="tooltip"
+                    title=""
+                    data-original-title="Change avatar"
+                  >
+                    <i class="fa fa-pen icon-sm text-muted"></i>
+                    <input type="file" name="profile_avatar" (change)="fileChangeEvent($event)" accept=".png, .jpg, .jpeg" formControlName="image" />
+                  </label>
+                </div>
+                <ng-container
+                [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{
+                  validation: 'required',
+                  message: 'Imagen es requerido.',
+                  control: newUserForm.controls['image']
+                }"
+              ></ng-container>
+              </div>
+            </div>
+          </div>
+          <!--end::Body-->
+        
+          <div class="card-header py-3">
+              <div class="card-title align-items-start flex-column">
+              <h3 class="card-label font-weight-bolder text-dark">Mensaje personalizado Whatsapp</h3>
+              </div>
+          </div>
+          <div class="card-body">
+              <div class="form-group row">
+                  <label class="col-xl-2 col-lg-2 col-form-label font-weight-bold">Número celular:</label>
+                  <div class="col-lg-5 col-xl-4">
+                  <input class="form-control form-control-lg form-control-solid"
+                      type="text"
+                      formControlName="whatsappPhone"
+                  />
+                  <ng-container
+                    [ngTemplateOutlet]="formError"
+                    [ngTemplateOutletContext]="{
+                      validation: 'required',
+                      message: 'Número de whastapp es requerido.',
+                      control: newUserForm.controls['whatsappPhone']
+                    }"
+                  ></ng-container>
+                  </div>
+                  <label class="col-xl-1 col-lg-1 col-form-label font-weight-bold">Mensaje:</label>
+                  <div class="col-lg-5 col-xl-4">
+                  <textarea class="form-control form-control-lg form-control-solid" id="exampleFormControlTextarea1" rows="8" style="resize: none;" formControlName="whatsappMsg"></textarea>
+                  <ng-container
+                    [ngTemplateOutlet]="formError"
+                    [ngTemplateOutletContext]="{
+                      validation: 'required',
+                      message: 'Mensaje de whatsapp es requerido.',
+                      control: newUserForm.controls['whatsappMsg']
+                    }"
+                  ></ng-container>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <!--end::Form-->
+      </div>
+    </ng-container>
+  </form>
+  
+  <ng-template
+    #formError
+    let-control="control"
+    let-message="message"
+    let-validation="validation"
+  >
+    <ng-container
+      *ngIf="control.hasError(validation) && (control.dirty || control.touched)"
+    >
+      <div class="fv-plugins-message-container">
+        <div class="fv-help-block">
+          {{ message }}
+        </div>
+      </div>
+    </ng-container>
+  </ng-template>
